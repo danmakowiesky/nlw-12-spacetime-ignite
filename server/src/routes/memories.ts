@@ -3,7 +3,8 @@ import { prisma } from '../lib/prisma'
 import z from 'zod'
 
 export async function memoriesRoutes(app: FastifyInstance) {
-  app.get('/memories', async () => {
+  app.get('/memories', async (request) => {
+    await request.jwtVerify()
     const getMemories = await prisma.memory.findMany({
       orderBy: {
         createdAt: 'asc',
